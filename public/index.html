@@ -9,28 +9,62 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            'bg': '#0f172a',
-            'card': '#111827',
-            'text': '#f1f5f9',
-            'muted': '#94a3b8',
-            'accent': '#3b82f6',
-            'accent-hover': '#2563eb',
-            'danger': '#ef4444',
-            'danger-hover': '#dc2626',
-            'border': '#1e293b',
-            'border-light': '#334155',
+            'bg': 'var(--color-bg)',
+            'card': 'var(--color-card)',
+            'text': 'var(--color-text)',
+            'muted': 'var(--color-muted)',
+            'accent': 'var(--color-accent)',
+            'accent-hover': 'var(--color-accent-hover)',
+            'danger': 'var(--color-danger)',
+            'danger-hover': 'var(--color-danger-hover)',
+            'border': 'var(--color-border)',
+            'border-light': 'var(--color-border-light)',
           }
         }
       }
     }
   </script>
   <style>
+    :root {
+      --color-bg: #f8fafc;
+      --color-card: #ffffff;
+      --color-text: #0f172a;
+      --color-muted: #64748b;
+      --color-accent: #3b82f6;
+      --color-accent-hover: #2563eb;
+      --color-danger: #ef4444;
+      --color-danger-hover: #dc2626;
+      --color-border: #e2e8f0;
+      --color-border-light: #f1f5f9;
+      --gradient-start: #f0f9ff;
+      --gradient-middle: #f8fafc;
+      --gradient-end: #f1f5f9;
+    }
+
+    .dark {
+      --color-bg: #0f172a;
+      --color-card: #111827;
+      --color-text: #f1f5f9;
+      --color-muted: #94a3b8;
+      --color-accent: #3b82f6;
+      --color-accent-hover: #2563eb;
+      --color-danger: #ef4444;
+      --color-danger-hover: #dc2626;
+      --color-border: #1e293b;
+      --color-border-light: #334155;
+      --gradient-start: #0b1223;
+      --gradient-middle: #0f172a;
+      --gradient-end: #0a0f1c;
+    }
+
     body {
       font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #0b1223 0%, #0f172a 50%, #0a0f1c 100%);
+      background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-middle) 50%, var(--gradient-end) 100%);
+      color: var(--color-text);
       min-height: 100vh;
     }
     
@@ -49,15 +83,21 @@
 <body>
   <div class="max-w-2xl mx-auto my-16 px-5 md:my-16 my-5 md:px-5 px-4">
     <div class="bg-card border border-border rounded-2xl p-8 md:p-8 p-6 shadow-2xl backdrop-blur-sm animate-fade-in" role="application" aria-label="Todo app">
-      <header class="mb-8">
-        <h1 class="text-3xl font-bold mb-3 bg-gradient-to-r from-text to-muted bg-clip-text text-transparent">Toro</h1>
-        <div class="text-muted text-base leading-relaxed">Your personal task manager</div>
+      <header class="mb-8 flex justify-between items-center">
+        <div>
+          <h1 class="text-3xl font-bold mb-3 bg-gradient-to-r from-text to-muted bg-clip-text text-transparent">Toro</h1>
+          <div class="text-muted text-base leading-relaxed">Your personal task manager</div>
+        </div>
+        <button id="theme-toggle" class="p-2 rounded-full">
+          <svg id="theme-toggle-dark-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.121-3.536a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM5.05 14.464l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 001.414 1.414zM16.95 5.05a1 1 0 010-1.414l-.707-.707a1 1 0 00-1.414 1.414l.707.707a1 1 0 011.414 0zM3.05 5.05l-.707.707a1 1 0 101.414 1.414l.707-.707a1 1 0 00-1.414-1.414z"></path></path></svg>
+        </button>
       </header>
 
       <section class="mb-6">
         <div class="flex gap-3 items-center md:flex-row flex-col">
           <input id="newTodo" type="text" placeholder="What needs to be done?" aria-label="New todo" 
-                 class="flex-1 px-4 py-3.5 rounded-xl border border-border-light bg-slate-900/80 text-text text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10 placeholder:text-muted w-full" />
+                 class="flex-1 px-4 py-3.5 rounded-xl border border-border-light bg-border-light dark:bg-slate-900/80 text-text text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10 placeholder:text-muted w-full" />
           <button id="addBtn" aria-label="Add todo" 
                   class="px-5 py-3.5 rounded-xl bg-accent text-white font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-accent-hover hover:-translate-y-0.5 whitespace-nowrap md:w-auto w-full">Add Task</button>
         </div>
@@ -326,6 +366,41 @@
           $(this).val(''); // Reset file input
         }
       });
+
+      // --- Theme Switcher ----------------------------------------------------
+      const themeToggle = $('#theme-toggle');
+      const lightIcon = $('#theme-toggle-light-icon');
+      const darkIcon = $('#theme-toggle-dark-icon');
+      const LS_THEME_KEY = 'theme.v1';
+
+      function applyTheme(theme) {
+        if (theme === 'dark') {
+          $('html').addClass('dark');
+          lightIcon.removeClass('hidden');
+          darkIcon.addClass('hidden');
+        } else {
+          $('html').removeClass('dark');
+          lightIcon.addClass('hidden');
+          darkIcon.removeClass('hidden');
+        }
+      }
+
+      function toggleTheme() {
+        const isDarkMode = $('html').hasClass('dark');
+        const newTheme = isDarkMode ? 'light' : 'dark';
+        localStorage.setItem(LS_THEME_KEY, newTheme);
+        applyTheme(newTheme);
+      }
+
+      themeToggle.on('click', toggleTheme);
+
+      // Apply saved theme on page load, or default to dark
+      const savedTheme = localStorage.getItem(LS_THEME_KEY);
+      if (savedTheme === 'light') {
+        applyTheme('light');
+      } else {
+        applyTheme('dark');
+      }
 
       // --- Bootstrap ------------------------------------------------------------
       // Only seed initial data for first-time users (when localStorage has never been initialized)
